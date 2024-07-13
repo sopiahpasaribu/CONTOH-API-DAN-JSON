@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTOH API DAN JSON</title>
+    <style>
+        #gambar {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .container {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LIST ANIME</h1>
+    <div id="gambar"></div>
+    <script>
+        function Tampil() {
+            fetch("https://api.jikan.moe/v4/anime?q=anime&sfw")
+                .then(response => response.json())
+                .then((items) => {
+                    const hasil = items.data;
+                    hasil.map((item) => {
+
+                        const container = document.createElement("div");
+                        container.className = "container";
+
+                        const img = document.createElement("img");
+                        img.src = item.images.jpg.image_url;
+                        img.className = "image";
+
+                        const div = document.getElementById("gambar");
+                        div.appendChild(container);
+                        container.appendChild(img);
+
+                        const a = document.createElement("a");
+                        a.href = item.trailer.url;
+                        a.textContent = item.titles[0].title;
+                        container.appendChild(a);
+
+                    })
+                    console.log(hasil);
+                })
+        }
+        Tampil();
+    </script>
+
+</body>
+
+</html>
